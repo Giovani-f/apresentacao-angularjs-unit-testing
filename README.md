@@ -1,6 +1,8 @@
 # AngularJS - Testes unitários Controller & Service
 
-## Indrodução a Controller
+## Introdução a Controller
+
+_Em geral, um Controller não deve tentar fazer muito. Ele deve conter apenas a lógica de negócios necessária para uma única exibição. A maneira mais comum de manter os controladores magros é encapsular o trabalho que não pertence aos controladores em serviços e, em seguida, usar esses serviços nos controladores por meio de injeção de dependência._
 
 - Controllers são os responsáveis pelo controle de fluxo de nossa aplicação.
 - É onde gerenciamos o fluxo de dados apresentados na view
@@ -33,7 +35,7 @@ _Ao usar o controlador em qualquer lugar em seu aplicativo angularJs, tente usar
 
   * **Compartilhar código**, para compartilhar estados ou dados com outros controladores devemos utilizar as factories/services.
 
-## Indrodução a Service
+## Introdução a Service
 
 - Service é o objeto usado para organizar e/ou compartilhar estados de objetos e as regras de negócio da aplicação.
 - Ele é singleton, ou seja, há apenas uma instância disponível durante a vida útil da aplicação.
@@ -129,7 +131,158 @@ Jasmine é uma estrutura de desenvolvimento orientada por comportamento para tes
 - Funciona muito bem com Karma
 - Também é recomendado na doc do AngularJS
 
+## NgMock
+
+Angular-Mocks (também conhecido como ngMock) nos dá uma API para nos permitir extrair nossos módulos angulares e injetar controladores, serviços, diretivas angulares e assim por diante para que possamos realmente testá-los.
+
+## Setup para os testes
+
+- Instalando as dependências.
+
+```sh
+npm install karma karma-jasmine karma-spec-reporter karma-chrome-launcher jasmine-core angular-mocks -D
+```
+
+- Adicione uma pasta com nome test na raiz do projeto.
+
+### Configurando o Karma
+
+- No terminal rode o seguinte comando:
+
+```sh
+npx karma init
+```
+
+- Selecione "Jasmine" como estrutura.
+- Escolha "não" para usar Require.js.
+- Escolha o navegador (no caso desse projeto será chrome, porém é possível utilizar mais de um)
+
+É possível também configurar o arquivo manualmente como no seguinte trecho:
+
+```js
+// base path that will be used to resolve all patterns (eg. files, exclude)
+    basePath: '',
+
+
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine'],
+
+
+    // list of files / patterns to load in the browser
+    files: [
+      './node_modules/angular/angular.js',
+      './node_modules/angular-ui-router/release/angular-ui-router.js',
+      './node_modules/angular-mocks/angular-mocks.js',
+      './src/app/services/users/users.js',
+      './src/app/app.js',
+      './src/app/index.controller.js',
+      './test/service.spec.js',
+      './test/controller.spec.js'
+    ],
+
+
+    // list of files to exclude
+    exclude: [
+    ],
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['spec'],
+
+
+    // web server port
+    port: 9876,
+
+
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
+    // enable / disable watching file and executing tests whenever any file changes
+    autoWatch: false,
+
+
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+    browsers: ['Chrome'],
+
+
+    // Continuous Integration mode
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: true,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}
+```
+
+### Configurando o arquivo de test
+
+- Na pasta test criada anteriormente adicione um arquivo no sequinte formato: *nomeDoController/Service.spec.js*.
+
+- Escreva a descrição geral do test.
+
+```js
+describe('test Controller', () => {
+
+}
+```
+
+- Jasmine possuí suporte ao beforeEach, que nos permite não repetir código várias vezes antes de um teste.
+- Então usando o método beforeEach(), devemos pegar nosso módulo que contém o Controller ou Service.
+
+```js
+describe('test Controller', () => {
+
+  beforeEach(module("nomeDoModulo"));
+}
+```
+
+### Injetando o Controller
+
+- O ngMock vem com um serviço chamado $controller que é responsável por criar e recuperar Controllers existentes.
+- Há também um serviço chamado $rootScope que é basicamente o pai de todos os $scope. Ele nos da a capacidade de instanciar novos $scope em seu método .$new()
+- Por que isso é importante? Precisamos injetar o controlador que queremos testar, mas precisamos usar o $controllerserviço para capturá-lo primeiro e $rootScopecriar um novo objeto de escopo para passar ao controlador para que ele saiba o que você quer dizer quando o código diz $scope.add(), etc.
+
+```js
+describe('test Controller', () => {
+
+  beforeEach(module("nomeDoModulo"));
+
+  beforeEach(inject(($rootScope, $controller) => {
+    scope = $rootScope.$new();
+    $controller('IndexController', {
+      $scope: scope
+    });
+  }));
+}
+```
+
+- Para testar uma função basta usar o *scope.nomeDaFuncao()*.
+### Injetando nosso service
+
+- No caso de service devemos injetar da seguinte maneira:
+
+```js
+describe('test Controller', () => {
+
+  beforeEach(module("nomeDoModulo"));
+
+  beforeEach(inject((_NomeDadoNoSerice_) => {
+    NomeDadoNoSerice = _NomeDadoNoSerice_;
+  }));
+}
+```
+
+- Para testar alguma função do service bastar usar: *NomeDadoNoSerice.nomeDaFuncao()*
+
+*Exemplos de amobos os testes são encontrados no projeto, na pasta test*
 ## Bibliografia
 
+- https://docs.angularjs.org/guide/unit-testing
+- https://coursework.vschool.io/testing-angularjs-part-1/
 - https://www.testim.io/blog/unit-testing-best-practices/
 - https://www.simform.com/blog/unit-testing-best-practices/

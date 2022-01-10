@@ -1,5 +1,5 @@
-describe('Users factory', () => {
-  const Users;
+describe('test Users service', () => {
+  let Users = '';
   const userList = [
     {
       id: '1',
@@ -27,7 +27,7 @@ describe('Users factory', () => {
     }
   ];
 
-  beforeEach(angular.mock.module('api.users'));
+  beforeEach(module('api.users'));
 
   beforeEach(inject((_Users_) => {
     Users = _Users_;

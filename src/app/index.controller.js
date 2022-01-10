@@ -5,8 +5,8 @@
   .controller('IndexController', IndexController);
 
   /**@ngInject */
-  function IndexController($scope) {
-    var vm = $scope
+  function IndexController() {
+    var vm = this
     vm.hellowWorld = 'Hello World!';
     vm.sum = (num1, num2) => {
       return num1 + num2
