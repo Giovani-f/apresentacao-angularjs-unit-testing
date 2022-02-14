@@ -69,43 +69,6 @@ O teste de unidade é um tipo de teste em que se separa o código nas menores un
 - Confiabilidade na hora de mergear o código.
 - Serve como documentação para novos devs.
 
-### Melhores práticas para testes unitários
-
-- Os testes devem ser rápidos
-  * Tornando-os mais simles possível.
-  * Não dependendo de outros testes.
-  * Simulando dependências externas.
-
-_Se forem lentos, os desenvolvedores não os executarão com a frequência necessária. Isso anula todo o propósito de ter um conjunto de testes de unidade em primeiro lugar, que é aumentar a confiança dos desenvolvedores para fazer alterações no código._
-
-- Os testes devem ser simples
-
-_Existem várias técnicas que podemos aplicar para ter um alto grau de confiança na correção de nossos testes. Uma delas é manter seus testes com baixa complexidade ciclomática. A complexidade ciclomática é uma métrica de código que indica o número de caminhos de execução possíveis que um determinado método pode seguir. Um trecho de código com menor complexidade é mais fácil de entender e manter, o que significa que os desenvolvedores têm menos probabilidade de introduzir bugs ao trabalhar nele._
-
-- O teste não deve duplicar a lógica de implementação
-
-_Resista à tentação de fazer seus testes sofisticados . Mantenha-os extremamente simples e seu conjunto de testes será o melhor para isso._
-
-- Os testes devem ser legíveis
-  * Use o padrão [AAA (Arrange, Act, Assert)](https://medium.com/@pjbgf/title-testing-code-ocd-and-the-aaa-pattern-df453975ab80), para definir as fases do seu código.
-  * Como alternativa, adote casos de teste estilo [BDD](https://www.testim.io/blog/cucumber-js-for-bdd-an-introductory-tutorial-with-examples/)
-  * Uma afirmação lógica por método.
-  * Não use números mágicos ou strings em seus casos de teste. Em vez disso, empregue variáveis ou constantes para documentar os valores que você está usando.
-
-_Os casos de teste funcionam também como forma de documentação. E eles são o melhor tipo de documentação, pois são executáveis e não ficam fora de sincronia com o que estão documentando. Mas para que a equipe possa colher os benefícios dessas especificações executáveis, elas obviamente precisam ser legíveis._
-
-- Os testes devem ser determinísticos
-
-_Torne seus testes determinísticos, significando que o teste deve sempre apresentar o mesmo comportamento se nenhuma alteração for feita no código em teste._
-
-_Suponha que você tenha uma função “a ()”. Então você escreve um teste para ele, e o teste está passando. Se você não alterar a (), o teste deve continuar a passar, não importa quantas vezes você o execute. O oposto também é verdadeiro: imagine que você vai e muda a função, e isso faz com que o teste falhe. Não importa se você executa o teste uma, dez ou mil vezes, ele deve continuar falhando até que você ou outra pessoa corrija a função._
-
-- _Para que um teste seja determinístico, ele deve ser completamente isolado. Você não pode ter seus testes dependendo de:_
-
-  * outros casos de teste.
-  * valores ambientais, como a hora atual ou as configurações de idioma do computador em que está sendo executado.
-  * dependências externas, como sistema de arquivos, rede, APIs, etc.
-
 ### Ferramentas utlizadas para testes unitários no AngularJS
 
 - Karma
@@ -278,6 +241,44 @@ describe('test Controller', () => {
 ```
 
 - Para testar alguma função do service bastar usar: *NomeDadoNoSerice.nomeDaFuncao()*
+
+### Melhores práticas para testes unitários
+
+- Os testes devem ser rápidos
+  * Tornando-os mais simles possível.
+  * Não dependendo de outros testes.
+  * Simulando dependências externas.
+
+_Se forem lentos, os desenvolvedores não os executarão com a frequência necessária. Isso anula todo o propósito de ter um conjunto de testes de unidade em primeiro lugar, que é aumentar a confiança dos desenvolvedores para fazer alterações no código._
+
+- Os testes devem ser simples
+
+_Existem várias técnicas que podemos aplicar para ter um alto grau de confiança na correção de nossos testes. Uma delas é manter seus testes com baixa complexidade ciclomática. A complexidade ciclomática é uma métrica de código que indica o número de caminhos de execução possíveis que um determinado método pode seguir. Um trecho de código com menor complexidade é mais fácil de entender e manter, o que significa que os desenvolvedores têm menos probabilidade de introduzir bugs ao trabalhar nele._
+
+- O teste não deve duplicar a lógica de implementação
+
+_Resista à tentação de fazer seus testes sofisticados . Mantenha-os extremamente simples e seu conjunto de testes será o melhor para isso._
+
+- Os testes devem ser legíveis
+  * Use o padrão [AAA (Arrange, Act, Assert)](https://medium.com/@pjbgf/title-testing-code-ocd-and-the-aaa-pattern-df453975ab80), para definir as fases do seu código.
+  * Como alternativa, adote casos de teste estilo [BDD](https://www.testim.io/blog/cucumber-js-for-bdd-an-introductory-tutorial-with-examples/)
+  * Uma afirmação lógica por método.
+  * Não use números mágicos ou strings em seus casos de teste. Em vez disso, empregue variáveis ou constantes para documentar os valores que você está usando.
+
+_Os casos de teste funcionam também como forma de documentação. E eles são o melhor tipo de documentação, pois são executáveis e não ficam fora de sincronia com o que estão documentando. Mas para que a equipe possa colher os benefícios dessas especificações executáveis, elas obviamente precisam ser legíveis._
+
+- Os testes devem ser determinísticos
+
+_Torne seus testes determinísticos, significando que o teste deve sempre apresentar o mesmo comportamento se nenhuma alteração for feita no código em teste._
+
+_Suponha que você tenha uma função “a ()”. Então você escreve um teste para ele, e o teste está passando. Se você não alterar a (), o teste deve continuar a passar, não importa quantas vezes você o execute. O oposto também é verdadeiro: imagine que você vai e muda a função, e isso faz com que o teste falhe. Não importa se você executa o teste uma, dez ou mil vezes, ele deve continuar falhando até que você ou outra pessoa corrija a função._
+
+- _Para que um teste seja determinístico, ele deve ser completamente isolado. Você não pode ter seus testes dependendo de:_
+
+  * outros casos de teste.
+  * valores ambientais, como a hora atual ou as configurações de idioma do computador em que está sendo executado.
+  * dependências externas, como sistema de arquivos, rede, APIs, etc.
+
 
 *Exemplos de amobos os testes são encontrados no projeto, na pasta test*
 ## Bibliografia
